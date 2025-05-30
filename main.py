@@ -1,15 +1,11 @@
-# main.py
 import sys
-from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
-                             QStackedWidget, QLabel, QFontDialog)
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout,QStackedWidget, QLabel, QFontDialog
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
-
-# Import modules from the project
+# Import my modules
 import data_manager
 from ui_views import MainMenuWidget, RegistrationWidget, ScheduleWidget
 
-# It's cleaner to keep the large stylesheet in its own file or variable
 APP_STYLESHEET = """
 QWidget {
     font-family: Vazir, Tahoma, sans-serif; font-size: 10pt; color: #e0e0e0;
@@ -79,8 +75,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("سامانه مدیریت کلاس")
-        self.setGeometry(80, 80, 1250, 820)
-
+        self.setGeometry(200, 100, 900, 600)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         
@@ -125,10 +120,8 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     data_manager.load_all_data()
-    
     app = QApplication(sys.argv)
     app.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
-    
     font_name = "Vazir"
     try:
         font = QFont(font_name, 10)
@@ -138,11 +131,8 @@ if __name__ == "__main__":
         print(f"خطا در تنظیم فونت: {e}")
         font = QFont() # Fallback to default
     app.setFont(font)
-    
     app.setStyle("Fusion")
     app.setStyleSheet(APP_STYLESHEET)
-
     window = MainWindow()
     window.show()
-    
     sys.exit(app.exec())
