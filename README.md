@@ -35,7 +35,7 @@
 
 ۱. ابتدا مخزن را از گیت‌هاب کلون (دانلود) کنید:
    ```bash
-   git clone [https://github.com/mojtabakalami/class-schedule-manager.git]
+   git clone https://github.com/mojtabakalami/class-schedule-manager.git
    ```
 
 ۲. وارد پوشه پروژه شوید:
@@ -69,12 +69,3 @@
 - **`requirements.txt`**: لیست کتابخانه‌های مورد نیاز پروژه.
 - **`.gitignore`**: مشخص می‌کند کدام فایل‌ها نباید به گیت‌هاب ارسال شوند.
 
-
-<<<<<<< HEAD
-=======
-## 👤 نویسنده
-
-
-
-- لینک گیت‌هاب: [github.com/mojtabakalami](https://github.com/mojtabakalami)
->>>>>>> ca4a469ce0d972a4f52311008c44134fb1aa8805
