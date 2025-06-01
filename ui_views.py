@@ -1,4 +1,3 @@
-# ui_views.py
 from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, 
                              QTabWidget, QTableWidget, QTableWidgetItem, QHeaderView, 
                              QMessageBox)
@@ -37,7 +36,7 @@ class RegistrationWidget(QWidget):
         self.schedule_widget = schedule_widget # Reference to update schedule view
         
         main_layout = QVBoxLayout(self)
-        title_label = QLabel("مدیریت اطلاعات دانشگاه، کلاس و دانش‌جو")
+        title_label = QLabel("مدیریت اطلاعات دانشگاه، کلاس و دانشجو ")
         title_label.setObjectName("sub_title_label")
         title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(title_label)
@@ -69,7 +68,7 @@ class RegistrationWidget(QWidget):
         self.edit_uni_btn = QPushButton("ویرایش دانشگاه")
         self.del_uni_btn = QPushButton("حذف دانشگاه")
         self.del_uni_btn.setObjectName("delete_button")
-        btn_layout.addStretch()
+        
         btn_layout.addWidget(self.add_uni_btn)
         btn_layout.addWidget(self.edit_uni_btn)
         btn_layout.addWidget(self.del_uni_btn)
@@ -94,7 +93,6 @@ class RegistrationWidget(QWidget):
         self.edit_class_btn = QPushButton("ویرایش کلاس")
         self.del_class_btn = QPushButton("حذف کلاس")
         self.del_class_btn.setObjectName("delete_button")
-        btn_layout.addStretch()
         btn_layout.addWidget(self.add_class_btn)
         btn_layout.addWidget(self.edit_class_btn)
         btn_layout.addWidget(self.del_class_btn)
@@ -109,7 +107,7 @@ class RegistrationWidget(QWidget):
     def create_student_tab(self):
         self.student_tab = QWidget()
         layout = QVBoxLayout(self.student_tab)
-        self.student_table = self.create_table(["شناسه", "نام دانش‌جو", "شماره دانشجویی", "دانشگاه", "کلاس"])
+        self.student_table = self.create_table(["شناسه", "نام دانشجو", "شماره دانشجویی", "دانشگاه", "کلاس"])
         self.student_table.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
         self.student_table.horizontalHeader().setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
         self.student_table.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeMode.Stretch)
@@ -120,13 +118,12 @@ class RegistrationWidget(QWidget):
         self.edit_student_btn = QPushButton("ویرایش دانشجو")
         self.del_student_btn = QPushButton("حذف دانشجو")
         self.del_student_btn.setObjectName("delete_button")
-        btn_layout.addStretch()
         btn_layout.addWidget(self.add_student_btn)
         btn_layout.addWidget(self.edit_student_btn)
         btn_layout.addWidget(self.del_student_btn)
         layout.addLayout(btn_layout)
         
-        self.tab_widget.addTab(self.student_tab, "مدیریت دانش‌جویان")
+        self.tab_widget.addTab(self.student_tab, "مدیریت دانشجویان")
         
         self.add_student_btn.clicked.connect(self.add_student)
         self.edit_student_btn.clicked.connect(self.edit_student)
@@ -321,7 +318,7 @@ class RegistrationWidget(QWidget):
             self.populate_student_table()
     
     def update_all_views(self):
-        """Updates all tables in this widget and the schedule view."""
+
         self.populate_all_tables()
         self.schedule_widget.populate_schedule_table()
 
@@ -355,10 +352,12 @@ class ScheduleWidget(QWidget):
         self.populate_schedule_table()
 
     def populate_schedule_table(self):
-        self.schedule_table.clearContents()
-        for r in range(self.schedule_table.rowCount()):
-            for c in range(self.schedule_table.columnCount()):
-                self.schedule_table.setSpan(r, c, 1, 1)
+        self.schedule_table.clear()
+        
+        self.schedule_table.setRowCount(len(WEEK_DAYS))
+        self.schedule_table.setColumnCount(len(DAY_TIMES))
+        self.schedule_table.setVerticalHeaderLabels(WEEK_DAYS)
+        self.schedule_table.setHorizontalHeaderLabels(DAY_TIMES)
 
         for cls in data_manager.all_classes_list:
             day, start, end = cls.get('day_index',-1), cls.get('start_time_index',-1), cls.get('end_time_index',-1)
@@ -369,7 +368,7 @@ class ScheduleWidget(QWidget):
             display_text = f"{cls.get('name', '')}\n({utils.get_university_name(cls.get('university_id'))})"
             item = QTableWidgetItem(display_text)
             item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
-            item.setBackground(QColor("lightblue"))
+            item.setBackground(QColor("gray"))
             item.setData(Qt.ItemDataRole.UserRole, cls.get('id'))
             item.setToolTip(f"{utils.get_class_name_for_display(cls.get('id'))}")
             

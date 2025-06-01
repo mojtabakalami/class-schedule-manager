@@ -1,4 +1,3 @@
-# utils.py
 import data_manager
 from config import WEEK_DAYS, DAY_TIMES
 
@@ -32,9 +31,22 @@ def get_class_name_for_display(class_id_number):
         day_index = details.get('day_index', -1)
         start_index = details.get('start_time_index', -1)
         end_index = details.get('end_time_index', -1)
-        day_text = WEEK_DAYS[day_index] if 0 <= day_index < len(WEEK_DAYS) else '؟'
-        start_text = DAY_TIMES[start_index] if 0 <= start_index < len(DAY_TIMES) else '؟'
-        end_text = DAY_TIMES[end_index - 1] if end_index > 0 and end_index - 1 < len(DAY_TIMES) else '؟'
+
+        if 0 <= day_index < len(WEEK_DAYS):
+            day_text = WEEK_DAYS[day_index]
+        else:
+            day_text = '؟'
+
+        if 0 <= start_index < len(DAY_TIMES):
+            start_text = DAY_TIMES[start_index]
+        else:
+            start_text = '؟'
+
+        if end_index > 0 and end_index - 1 < len(DAY_TIMES):
+            end_text = DAY_TIMES[end_index - 1]
+        else:
+            end_text = '؟'
+            
         return f"{details.get('name', '')} ({day_text} {start_text}-{end_text})"
     else:
         return "کلاس نامشخص"

@@ -158,7 +158,7 @@ class AddEditStudentDialog(QDialog):
             uni_index = self.university_selection_combo.findData(uni_id)
             if uni_index >= 0: self.university_selection_combo.setCurrentIndex(uni_index)
             
-            # This logic ensures the previously selected class is shown correctly
+            
             self.update_class_combo_for_edit()
 
         self.dialog_buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)

@@ -2,7 +2,7 @@ import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout,QStackedWidget, QLabel, QFontDialog
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
-# Import my modules
+#my modules
 import data_manager
 from ui_views import MainMenuWidget, RegistrationWidget, ScheduleWidget
 
@@ -109,18 +109,17 @@ class MainWindow(QMainWindow):
         self.switch_screen(1)
 
     def show_schedule_screen(self):
-        self.setWindowTitle("مشاهده زمانبندی")
+        self.setWindowTitle(" جدول زمانبندی")
         self.schedule_screen.populate_schedule_table()
         self.switch_screen(2)
         
     def closeEvent(self, event):
-        """Saves data when the application is closed."""
         data_manager.save_all_data()
         event.accept()
 
 if __name__ == "__main__":
     data_manager.load_all_data()
-    app = QApplication(sys.argv)
+    app = QApplication([])
     app.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
     font_name = "Vazir"
     try:

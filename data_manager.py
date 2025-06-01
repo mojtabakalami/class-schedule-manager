@@ -1,16 +1,12 @@
-# data_manager.py
 import json
 from config import DATA_FILE_PATH
 
-# لیست‌های اصلی برنامه که داده‌ها را در حافظه نگه می‌دارند
 all_classes_list = []
 all_students_list = []
 all_universities_list = []
 
 def save_all_data():
-    """
-    این تابع تمام داده‌های برنامه را در فایل JSON ذخیره می‌کند.
-    """
+
     global all_classes_list, all_students_list, all_universities_list
     try:
         data_to_save = {
@@ -26,9 +22,7 @@ def save_all_data():
         print(f"یک خطای غیرمنتظره در هنگام ذخیره رخ داد: {e}")
 
 def load_all_data():
-    """
-    این تابع داده‌ها را از فایل JSON بارگذاری می‌کند.
-    """
+
     global all_classes_list, all_students_list, all_universities_list
     try:
         with open(DATA_FILE_PATH, 'r', encoding='utf-8') as f:
