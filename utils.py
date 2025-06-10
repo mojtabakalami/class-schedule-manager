@@ -25,6 +25,7 @@ def get_class_details_by_id(class_id_number):
             return class_item
     return None
 
+
 def get_class_name_for_display(class_id_number):
     details = get_class_details_by_id(class_id_number)
     if details:
@@ -42,10 +43,19 @@ def get_class_name_for_display(class_id_number):
         else:
             start_text = '؟'
 
-        if end_index > 0 and end_index - 1 < len(DAY_TIMES):
-            end_text = DAY_TIMES[end_index - 1]
+        
+        if end_index > 0:
+            if end_index < len(DAY_TIMES):
+                end_text = DAY_TIMES[end_index]
+            elif end_index == len(DAY_TIMES):
+                
+                last_hour = int(DAY_TIMES[-1].split(':')[0])
+                end_text = f"{last_hour + 1:02d}:00"
+            else:
+                end_text = '؟'
         else:
             end_text = '؟'
+        # ------------------------------------
             
         return f"{details.get('name', '')} ({day_text} {start_text}-{end_text})"
     else:

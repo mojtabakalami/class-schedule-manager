@@ -16,7 +16,6 @@ class MainMenuWidget(QWidget):
         layout.setSpacing(40)
         title_label = QLabel("سامانه مدیریت کلاس و زمانبندی")
         title_label.setObjectName("main_title_label")
-        title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.register_info_button = QPushButton(" ثبت / ویرایش اطلاعات ")
         self.view_schedule_button = QPushButton(" مشاهده جدول زمانبندی ")
         self.register_info_button.setMinimumSize(QSize(350, 65))
@@ -33,7 +32,7 @@ class RegistrationWidget(QWidget):
     def __init__(self, show_main_menu_callback, schedule_widget, parent=None):
         super().__init__(parent)
         self.show_main_menu_callback = show_main_menu_callback
-        self.schedule_widget = schedule_widget # Reference to update schedule view
+        self.schedule_widget = schedule_widget 
         
         main_layout = QVBoxLayout(self)
         title_label = QLabel("مدیریت اطلاعات دانشگاه، کلاس و دانشجو ")
@@ -166,9 +165,20 @@ class RegistrationWidget(QWidget):
             self.class_table.setItem(row, 0, id_item)
             self.class_table.setItem(row, 1, QTableWidgetItem(cls.get('name')))
             self.class_table.setItem(row, 2, QTableWidgetItem(utils.get_university_name(cls.get('university_id'))))
-            day = WEEK_DAYS[cls['day_index']] if 'day_index' in cls and 0 <= cls['day_index'] < len(WEEK_DAYS) else '؟'
-            start = DAY_TIMES[cls['start_time_index']] if 'start_time_index' in cls and 0 <= cls['start_time_index'] < len(DAY_TIMES) else '؟'
-            end = DAY_TIMES[cls['end_time_index'] - 1] if 'end_time_index' in cls and 0 < cls['end_time_index'] <= len(DAY_TIMES) else '؟'
+            
+            if 'day_index' in cls and 0 <= cls['day_index'] < len(WEEK_DAYS):
+                day = WEEK_DAYS[cls['day_index']]
+            else:
+                day = '؟'
+            if 'start_time_index' in cls and 0 <= cls['start_time_index'] < len(DAY_TIMES):
+                start = DAY_TIMES[cls['start_time_index']]
+            else:
+                start = '؟'
+            if 'end_time_index' in cls and 0 < cls['end_time_index'] <= len(DAY_TIMES):
+                end = DAY_TIMES[cls['end_time_index'] ]
+            else:
+                end = '؟'
+
             self.class_table.setItem(row, 3, QTableWidgetItem(day))
             self.class_table.setItem(row, 4, QTableWidgetItem(start))
             self.class_table.setItem(row, 5, QTableWidgetItem(end))
@@ -365,10 +375,11 @@ class ScheduleWidget(QWidget):
                 continue
 
             duration = end - start
+
             display_text = f"{cls.get('name', '')}\n({utils.get_university_name(cls.get('university_id'))})"
             item = QTableWidgetItem(display_text)
             item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
-            item.setBackground(QColor("gray"))
+            item.setBackground(QColor("#135963"))
             item.setData(Qt.ItemDataRole.UserRole, cls.get('id'))
             item.setToolTip(f"{utils.get_class_name_for_display(cls.get('id'))}")
             
@@ -380,7 +391,6 @@ class ScheduleWidget(QWidget):
         item = self.schedule_table.item(row, column)
         if item:
             return item.data(Qt.ItemDataRole.UserRole)
-        # Check for span
         for c in range(column, -1, -1):
             if self.schedule_table.columnSpan(row, c) > 1:
                 item = self.schedule_table.item(row, c)

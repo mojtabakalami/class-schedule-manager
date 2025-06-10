@@ -128,7 +128,7 @@ if __name__ == "__main__":
             print(f"فونت '{font_name}' پیدا نشد. از فونت پیش‌فرض استفاده می‌شود.")
     except Exception as e:
         print(f"خطا در تنظیم فونت: {e}")
-        font = QFont() # Fallback to default
+        font = QFont() #default
     app.setFont(font)
     app.setStyle("Fusion")
     app.setStyleSheet(APP_STYLESHEET)
